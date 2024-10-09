@@ -52,7 +52,7 @@
                                 <tr role="row" class="odd">
                                     <td><img src="{{ $category->image_url}}" height="70"></td>
                                     <td>{{$category->name}}</td>
-                                    <td>{{$category->parent_id}}</td>
+                                    <td>{{$category->parent->name}}</td>
                                     <td>{{$category->description}}</td>
                                     <td>{{$category->status}}</td>
                                     <td>

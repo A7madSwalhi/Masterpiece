@@ -1,4 +1,6 @@
-		<header>
+
+
+        <header>
 			<div class="topbar d-flex align-items-center">
 				<nav class="navbar navbar-expand">
 					<div class="mobile-toggle-menu"><i class='bx bx-menu'></i>
@@ -345,7 +347,7 @@
 								<div class="dropdown-divider mb-0"></div>
 							</li>
 							<li>
-                                <form action="{{ route("admin.logout") }}" method="POST">
+                                <form method="POST" action="{{route("vendor.logout")}}" >
                                     @csrf
                                     <button class="dropdown-item" type="submit">
                                         <i class='bx bx-log-out-circle'></i>

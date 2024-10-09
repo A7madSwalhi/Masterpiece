@@ -20,7 +20,7 @@ class CategoriesController extends Controller
         $request = request();
 
 
-        $categories = Category::filter($request->query())->paginate(2);
+        $categories = Category::with('parent')->filter($request->query())->paginate();
         return view("Admin.Dashboard.Categories.index",compact('categories'));
     }
 

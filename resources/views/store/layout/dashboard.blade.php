@@ -43,13 +43,13 @@
 				</div>
 			</div>
 			<!--navigation-->
-                <x-admin-nav />
-                {{-- @include('Admin.partial.navigation') --}}
+
+                @include('store.partial.navigation')
 			<!--end navigation-->
 		</div>
 		<!--end sidebar wrapper -->
 		<!--start header -->
-            @include('Admin.partial.header')
+            @include('store.partial.header')
 		<!--end header -->
 		<!--start page wrapper -->
 		<div class="page-wrapper">
@@ -63,7 +63,7 @@
 							<ol class="breadcrumb mb-0 p-0">
                                 @section('breadcrumb')
                                     <li class="breadcrumb-item">
-                                        <a href="{{route('admin.dashboard')}}"><i class="bx bx-home-alt"></i></a>
+                                        <a href="{{route('vendor.dashboard')}}"><i class="bx bx-home-alt"></i></a>
                                     </li>
                                 @show
 							</ol>
@@ -94,11 +94,11 @@
 		<!--end overlay-->
 		<!--Start Back To Top Button--> <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
 		<!--End Back To Top Button-->
-        @include('Admin.partial.footer')
+        @include('store.partial.footer')
 	</div>
 	<!--end wrapper-->
 	<!--start switcher-->
-        @include("Admin.partial.switcher")
+        @include("store.partial.switcher")
 	<!--end switcher-->
 	<!-- Bootstrap JS -->
 	<script src="{{asset("assetDashboard/" . "assets/js/bootstrap.bundle.min.js")}}"></script>

@@ -3,7 +3,8 @@
     'selected' => '',
     'options',
     'required' => false ,
-    'id' => ''
+    'id' => '',
+    'first' => ''
 ])
 
 
@@ -20,7 +21,7 @@
     ]) }}
     @if($required) required @endif
 >
-    <option value="">Choose</option>
+    <option value="">Choose {{ $first }}</option>
     @foreach($options as $value => $text)
         <option value="{{ $value }}" @selected( @old($name,$selected) == $value)>{{ $text }}</option>
 

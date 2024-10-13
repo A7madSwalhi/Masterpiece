@@ -14,6 +14,24 @@
             ]
 
         ],
+        [
+            'main_icon' => "bx bx-category",
+            'main_name'=> "Brands",
+
+            'sub_routes' => [
+                [
+                    'icon' => 'bx bx-right-arrow-alt',
+                    'route' => 'admin.brands.index',
+                    'title' => 'All brands'
+                ],
+                [
+                    'icon' => 'bx bx-right-arrow-alt',
+                    'route' => 'admin.brands.create',
+                    'title' => 'Add Brand'
+                ]
+
+            ]
+        ],
 
         [
             'main_icon' => "bx bx-category",
@@ -35,8 +53,22 @@
         ],
 
         [
-
+            'main_icon' => "bx bx-category",
+            'main_name'=> "Product Manage",
+            'sub_routes' => [
+                [
+                    'icon' => 'bx bx-right-arrow-alt',
+                    'route' => 'admin.products.index',
+                    'title' => 'All Products'
+                ],
+                [
+                    'icon' => 'bx bx-right-arrow-alt',
+                    'route' => 'admin.products.create',
+                    'title' => 'Add Products'
+                ],
+            ],
         ],
     ];
+
 
 

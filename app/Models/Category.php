@@ -29,6 +29,11 @@ class Category extends Model
         return $this->hasMany(Category::class, 'parent_id', 'id');
     }
 
+    public function products()
+    {
+        return $this->hasMany(Product::class,'catetgory_id','id');
+    }
+
 
     public static function uploadImgae(Request $request)
     {

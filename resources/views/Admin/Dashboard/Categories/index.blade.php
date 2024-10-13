@@ -30,7 +30,7 @@
                                 <option value="active" @selected(request('status') == 'active')>Active</option>
                                 <option value="archived" @selected(request('status') == 'inactive')>Inactive</option>
                             </select> --}}
-                            <x-form.select name="status" :selected="request('status')" :options="['active' => 'Active' ,'inactive' => 'Inactive']"/>
+                            <x-form.select name="status" first="Status" :selected="request('status')" :options="['active' => 'Active' ,'inactive' => 'Inactive']"/>
                             <button class="btn btn-dark mx-2">Filter</button>
                         </form>
                     </div>

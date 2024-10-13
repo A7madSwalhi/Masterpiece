@@ -1,5 +1,5 @@
 @props([
-    'type' => 'text', 'name', 'value' => '', 'required' => false, 'placeholder' => '','id'=>''
+    'type' => 'text', 'name', 'value' => ' ', 'required' => false, 'placeholder' => '', 'id'=>''
 ])
 
 
@@ -12,10 +12,15 @@
         'form-control',
         'is-invalid' => $errors->has($name)
     ]) }}
-    @if($required) required @endif
+
     @if($placeholder)
     placeholder="{{$placeholder}}"
     @endif
+
+    @if($required) required @endif
+
+    {{ $attributes->except('class') }}
+
 >
 
 

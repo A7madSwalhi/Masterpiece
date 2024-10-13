@@ -15,7 +15,7 @@ class VendorScope implements Scope
     public function apply(Builder $builder, Model $model): void
     {
         $vendor = Auth::guard('vendor')->user();
-        if($vendor->id){
+        if($vendor){
             $builder->where('vendor_id' , '=' , $vendor->id);
         }
     }

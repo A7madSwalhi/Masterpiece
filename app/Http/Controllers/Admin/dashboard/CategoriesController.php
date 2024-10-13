@@ -21,6 +21,7 @@ class CategoriesController extends Controller
 
 
         $categories = Category::with('parent')->filter($request->query())->paginate();
+
         return view("Admin.Dashboard.Categories.index",compact('categories'));
     }
 
@@ -50,6 +51,7 @@ class CategoriesController extends Controller
         ]);
 
         $data = $request->except('image');
+
         $data['image'] = Category::uploadImgae($request);
 
 

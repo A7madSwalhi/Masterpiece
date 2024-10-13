@@ -1,5 +1,6 @@
 <?php
 
+use app\Helpers\Currency;
 use Illuminate\Support\Facades\Facade;
 
 return [
@@ -70,6 +71,8 @@ return [
     */
 
     'timezone' => 'Asia/Amman',
+
+    'currency' => 'JOD',
 
     /*
     |--------------------------------------------------------------------------
@@ -210,6 +213,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+            'Currency' => App\Helpers\Currency::class,
     ])->toArray(),
 
 ];

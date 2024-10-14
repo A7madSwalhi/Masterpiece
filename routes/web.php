@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\dashboard\CategoriesController;
 use App\Http\Controllers\Admin\dashboard\GallariesController;
+use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
+use App\Http\Controllers\Vendor\ProfileController as VendorProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,7 +72,8 @@ Route::prefix('admin')->as('admin.')->middleware('auth:admin')->group(function (
 
     Route::delete('/products/gallaryimage/{image}',[GallariesController::class,'destroy'])->name('products.feature.gallaryImage.destroy');
 
-
+    Route::get('/profile/{id}', [AdminProfileController::class, 'edit'])->name('profile');
+    Route::put('/profile/{id}', [AdminProfileController::class, 'update'])->name('profile.update');
 });
 
 
@@ -99,6 +102,9 @@ Route::prefix('vendor')->as('vendor.')->middleware('auth:vendor')->group(functio
     Route::get('/dashboard', function () {
         return view('store.dashboard');
     })->name('dashboard');
+
+    Route::get('/profile/{id}', [VendorProfileController::class, 'edit'])->name('profile');
+    Route::put('/profile/{id}', [VendorProfileController::class, 'update'])->name('profile.update');
 
 
 });

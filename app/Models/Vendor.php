@@ -50,4 +50,9 @@ class Vendor extends Authenticatable
     {
         return $this->hasMany(Product::class,'vendor_id','id');
     }
+
+    public function profile()
+    {
+        return $this->morphOne(Profile::class, 'profileable');
+    }
 }

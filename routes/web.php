@@ -8,6 +8,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\dashboard\CategoriesController;
 use App\Http\Controllers\Admin\dashboard\GallariesController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
+use App\Http\Controllers\front\CartController;
+use App\Http\Controllers\front\ProductsController as FrontProductsController;
 use App\Http\Controllers\Vendor\ProfileController as VendorProfileController;
 
 /*
@@ -34,6 +36,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 });
+
+route::get('/products',[FrontProductsController::class,'index'])->name('products.index');
+
+route::get('/products/{product:slug}',[FrontProductsController::class,'show'])->name('products.show');
+
+route::resource('cart',CartController::class);
 
 
 require __DIR__.'/auth.php';

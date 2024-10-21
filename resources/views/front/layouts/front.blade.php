@@ -23,9 +23,12 @@
     <link rel="stylesheet" href="{{ asset('front/css/jquery.classycountdown.css') }}">
     <link rel="stylesheet" href="{{ asset('front/css/venobox.min.css') }}">
 
+
     <link rel="stylesheet" href="{{ asset('front/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('front/css/responsive.css') }}">
     <!-- <link rel="stylesheet" href="css/rtl.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    @livewireStyles
     @stack('styles')
 </head>
 
@@ -34,7 +37,7 @@
     <!--============================
         HEADER START
     ==============================-->
-    <header>
+    <header id="cart-menu">
         <div class="container">
             <div class="row">
                 <div class="col-2 col-md-1 d-lg-none">
@@ -44,7 +47,7 @@
                 </div>
                 <div class="col-xl-2 col-7 col-md-8 col-lg-2">
                     <div class="wsus_logo_area">
-                        <a class="wsus__header_logo" href="index.html">
+                        <a class="wsus__header_logo" href="{{ route('home') }}">
                             <img src="{{ asset('front/images/logo_2.png') }}" alt="logo" class="img-fluid w-100">
                         </a>
                     </div>
@@ -71,14 +74,30 @@
                         <ul class="wsus__icon_area">
                             <li><a href="wishlist.html"><i class="fal fa-heart"></i><span>05</span></a></li>
                             <li><a href="compare.html"><i class="fal fa-random"></i><span>03</span></a></li>
-                            <li><a class="wsus__cart_icon" href="#"><i
-                                        class="fal fa-shopping-bag"></i><span>04</span></a></li>
+                            {{-- <li><a class="wsus__cart_icon" href="#"><i
+                                        class="fal fa-shopping-bag"></i>
+                                        @if (App\Facades\Cart::get()->count() > 0)
+                                            <span id="cart-item-count">{{ App\Facades\Cart::get()->count() }}</span>
+                                        @endif
+
+
+                                    </a></li> --}}
+
+                                    <li>
+                                        <a class="wsus__cart_icon" href="#">
+                                            <i class="fal fa-shopping-bag"></i>
+                                            <span id="cart-item-count">{{ App\Facades\Cart::get()->count() }}</span>
+                                        </a>
+                                    </li>
+
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="wsus__mini_cart">
+
+
+        {{-- <div class="wsus__mini_cart">
             <h4>shopping cart <span class="wsus_close_mini_cart"><i class="far fa-times"></i></span></h4>
             <ul>
                 <li>
@@ -134,10 +153,13 @@
             </ul>
             <h5>sub total <span>$3540</span></h5>
             <div class="wsus__minicart_btn_area">
-                <a class="common_btn" href="cart_view.html">view cart</a>
+                <a class="common_btn" href="{{ route('cart.index') }}">view cart</a>
                 <a class="common_btn" href="check_out.html">checkout</a>
             </div>
-        </div>
+        </div> --}}
+        {{-- <x-cart-menu/> --}}
+
+        @livewire('cart-menu')
 
     </header>
     <!--============================
@@ -363,7 +385,7 @@
                         </ul>
 
                         <ul class="wsus__menu_item">
-                            <li><a class="active" href="index.html">home</a></li>
+                            <li><a class="active" href="{{ route('home') }}">home</a></li>
                             <li><a href="product_grid_view.html">shop <i class="fas fa-caret-down"></i></a>
                                 <div class="wsus__mega_menu">
                                     <div class="row">
@@ -454,9 +476,26 @@
                             <li><a href="daily_deals.html">daily deals</a></li>
                         </ul>
                         <ul class="wsus__menu_item wsus__menu_item_right">
-                            <li><a href="contact.html">contact</a></li>
-                            <li><a href="dsahboard.html">my account</a></li>
-                            <li><a href="login.html">login</a></li>
+
+                            @auth('web')
+                                <li><a href="track_order.html">track order</a></li>
+                                <li class="wsus__relative_li">{{ Auth::guard('web')->user()->name}}<i class="fas fa-caret-down ms-2"></i>
+                                <ul class="wsus__menu_droapdown">
+                                    <li><a href="dsahboard.html">my account</a></li>
+                                    <li><a href="faqs.html">Profile</a></li>
+                                    <li>
+                                        <form action="{{ route('logout') }}" method="POST">
+                                            @csrf
+                                            <button type="submit">Logout</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            @else
+                            <li><a href="track_order.html">track order</a></li>
+                            <li><a href="{{ route('login') }}">login</a></li>
+                            @endauth
                         </ul>
                     </div>
                 </div>
@@ -759,7 +798,8 @@
         SCROLL BUTTON  END
     ==============================-->
 
-
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    @livewireScripts
     <!--jquery library js-->
     <script src="{{ asset('front/js/jquery-3.6.0.min.js') }}"></script>
     <!--bootstrap js-->
@@ -797,6 +837,75 @@
 
     <!--main/custom js-->
     <script src="{{ asset('front/js/main.js') }}"></script>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <x-flashtoaster />
+
+
+
+        <script>
+            const csrf_token = "{{ csrf_token() }}";
+        </script>
+
+        {{-- <script>
+            $('.remove-item').on('click', function(e) {
+
+                let id = $(this).data('id');
+                $.ajax({
+                    url: "/cart/" + id, //data-id
+                    method: 'delete',
+                    data: {
+                        _token: csrf_token
+                    },
+                    success: response => {
+                        $(`#${id}`).remove();
+
+                    }
+                });
+            });
+        </script> --}}
+
+        <script>
+            $(document).ready(function () {
+                // Use a wildcard selector for forms with an ID that starts with 'add-to-cart-form-'
+                $('form[id^="add-to-cart-form-"]').on('submit', function (e) {
+                    e.preventDefault(); // Prevent form from submitting normally
+
+                    let formData = $(this).serialize(); // Serialize the form data
+
+                    $.ajax({
+                        url: $(this).attr('action'), // Use the form's action URL
+                        method: 'POST',
+                        data: formData,
+                        success: function (response) {
+                            toastr.success('Item added to cart successfully!'); // Show success message
+                            Livewire.dispatch('cartUpdated');
+                        },
+                        error: function (xhr) {
+                            // Handle error
+                            let errorMessage = xhr.responseJSON?.message || 'Failed to add item to cart.'; // Get error message from response
+                            toastr.error(errorMessage); // Show error message
+                        }
+                    });
+                });
+            });
+
+            document.addEventListener('DOMContentLoaded', function () {
+                Livewire.on('cartCountUpdated', (count) => {
+                    document.getElementById('cart-item-count').innerText = count;
+                });
+            });
+
+        </script>
+
+
+
+
+
+
+
     @stack('scripts')
 </body>
 

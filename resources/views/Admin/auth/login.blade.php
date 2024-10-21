@@ -18,6 +18,7 @@
 	<link href="{{asset("assetDashboard/" . "assets/css/bootstrap.min.css")}}" rel="stylesheet">
 	<link href="{{asset("assetDashboard/" . "assets/css/app.css")}}" rel="stylesheet">
 	<link href="{{asset("assetDashboard/" . "assets/css/icons.css")}}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 	<title>Admin Login</title>
 </head>
 
@@ -108,6 +109,26 @@
 	</script>
 	<!--app JS-->
 	<script src="{{asset("assetDashboard/" . "assets/js/app.js")}}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        @if ($errors->any())
+            <script>
+                toastr.options = {
+                    "closeButton": true,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "timeOut": 0,
+                    "extendedTimeOut": 0,
+                    "onclick": function() { toastr.clear(); }
+                };
+                @foreach ($errors->all() as $error)
+                    toastr.error("{{ $error }}");
+                @endforeach
+
+            </script>
+        @endif
+
+
 </body>
 
 </html>

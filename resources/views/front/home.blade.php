@@ -1,6 +1,6 @@
 <x-front-layout>
 
-    <x:$breadcrumb>
+    {{-- <x:$breadcrumb>
         <section id="wsus__breadcrumb">
             <div class="wsus_breadcrumb_overlay">
                 <div class="container">
@@ -16,7 +16,7 @@
                 </div>
             </div>
         </section>
-    </x:$breadcrumb>
+    </x:$breadcrumb> --}}
 
 
     <!--==========================
@@ -32,10 +32,6 @@
                         <div class="row">
                             <div class="col-xl-6 col-12 col-sm-10 col-md-8 col-lg-6 m-auto display">
                                 <div class="wsus__quick_view_img">
-                                    <a class="venobox wsus__pro_det_video" data-autoplay="true" data-vbtype="video"
-                                        href="https://youtu.be/7m16dFI1AF8">
-                                        <i class="fas fa-play"></i>
-                                    </a>
                                     <div class="row modal_slider">
                                         <div class="col-xl-12">
                                             <div class="modal_slider_img">
@@ -75,11 +71,8 @@
                                     </p>
                                     <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 
-                                    <div class="wsus_pro_hot_deals">
-                                        <h5>offer ending time : </h5>
-                                        <div class="simply-countdown simply-countdown-one"></div>
-                                    </div>
-                                    <div class="wsus_pro_det_color">
+
+                                    {{-- <div class="wsus_pro_det_color">
                                         <h5>color :</h5>
                                         <ul>
                                             <li><a class="blue" href="#"><i class="far fa-check"></i></a></li>
@@ -97,37 +90,14 @@
                                             <li><a href="#">L</a></li>
                                             <li><a href="#">XL</a></li>
                                         </ul>
-                                    </div>
+                                    </div> --}}
+
                                     <div class="wsus__quentity">
                                         <h5>quentity :</h5>
                                         <form class="select_number">
                                             <input class="number_area" type="text" min="1" max="100" value="1" />
                                         </form>
                                         <h3>$50.00</h3>
-                                    </div>
-                                    <div class="wsus__selectbox">
-                                        <div class="row">
-                                            <div class="col-xl-6 col-sm-6">
-                                                <h5 class="mb-2">select:</h5>
-                                                <select class="select_2" name="state">
-                                                    <option>default select</option>
-                                                    <option>select 1</option>
-                                                    <option>select 2</option>
-                                                    <option>select 3</option>
-                                                    <option>select 4</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-xl-6 col-sm-6">
-                                                <h5 class="mb-2">select:</h5>
-                                                <select class="select_2" name="state">
-                                                    <option>default select</option>
-                                                    <option>select 1</option>
-                                                    <option>select 2</option>
-                                                    <option>select 3</option>
-                                                    <option>select 4</option>
-                                                </select>
-                                            </div>
-                                        </div>
                                     </div>
                                     <ul class="wsus__button_area">
                                         <li><a class="add_cart" href="#">add to cart</a></li>
@@ -137,15 +107,6 @@
                                     </ul>
                                     <p class="brand_model"><span>model :</span> 12345670</p>
                                     <p class="brand_model"><span>brand :</span> The Northland</p>
-                                    <div class="wsus__pro_det_share">
-                                        <h5>share :</h5>
-                                        <ul class="d-flex">
-                                            <li><a class="facebook" href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                            <li><a class="twitter" href="#"><i class="fab fa-twitter"></i></a></li>
-                                            <li><a class="whatsapp" href="#"><i class="fab fa-whatsapp"></i></a></li>
-                                            <li><a class="instagram" href="#"><i class="fab fa-instagram"></i></a></li>
-                                        </ul>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -169,7 +130,7 @@
                     <div class="wsus__banner_content">
                         <div class="row banner_slider">
                             <div class="col-xl-12">
-                                <div class="wsus__single_slider" style="background: url(images/slider_1.jpg);">
+                                <div class="wsus__single_slider" style="background: url({{ asset('front/images/slider_1.jpg') }});">
                                     <div class="wsus__single_slider_text">
                                         <h3>new arrivals</h3>
                                         <h1>men's fashion</h1>
@@ -179,7 +140,7 @@
                                 </div>
                             </div>
                             <div class="col-xl-12">
-                                <div class="wsus__single_slider" style="background: url(images/slider_2.jpg);">
+                                <div class="wsus__single_slider" style="background: url({{ asset('front/images/slider_2.jpg') }});">
                                     <div class="wsus__single_slider_text">
                                         <h3>new arrivals</h3>
                                         <h1>kid's fashion</h1>
@@ -189,7 +150,7 @@
                                 </div>
                             </div>
                             <div class="col-xl-12">
-                                <div class="wsus__single_slider" style="background: url(images/slider_3.jpg);">
+                                <div class="wsus__single_slider" style="background: url({{ asset('front/images/slider_3.jpg') }});">
                                     <div class="wsus__single_slider_text">
                                         <h3>new arrivals</h3>
                                         <h1>winter collection</h1>
@@ -216,7 +177,7 @@
         <div class=" container">
             <div class="row">
                 <div class="col-xl-12">
-                    <div class="offer_time" style="background: url(images/flash_sell_bg.jpg)">
+                    <div class="offer_time" style="background: url({{ asset('front/images/flash_sell_bg.jpg') }})">
                         <div class="wsus__flash_coundown">
                             <span class=" end_text">flash sell</span>
                             <div class="simply-countdown simply-countdown-one"></div>
@@ -226,37 +187,13 @@
                 </div>
             </div>
             <div class="row flash_sell_slider">
-                <div class="col-xl-3 col-sm-6 col-lg-4">
-                    <div class="wsus__product_item">
-                        <span class="wsus__new">New</span>
-                        <span class="wsus__minus">-20%</span>
-                        <a class="wsus__pro_link" href="product_details.html">
-                            <img src="{{ asset('front/images/pro3.jpg') }}" alt="product" class="img-fluid w-100 img_1" />
-                            <img src="{{ asset('front/images/pro3_3.jpg') }}" alt="product" class="img-fluid w-100 img_2" />
-                        </a>
-                        <ul class="wsus__single_pro_icon">
-                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                        class="far fa-eye"></i></a></li>
-                            <li><a href="#"><i class="far fa-heart"></i></a></li>
-                            <li><a href="#"><i class="far fa-random"></i></a>
-                        </ul>
-                        <div class="wsus__product_details">
-                            <a class="wsus__category" href="#">Electronics </a>
-                            <p class="wsus__pro_rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span>(133 review)</span>
-                            </p>
-                            <a class="wsus__pro_name" href="#">hp 24" FHD monitore</a>
-                            <p class="wsus__price">$159 <del>$200</del></p>
-                            <a class="add_cart" href="#">add to cart</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-sm-6 col-lg-4">
+
+                @foreach ($products as $product)
+                    <x-front.main-product-card :product="$product"/>
+                @endforeach
+
+
+                {{-- <div class="col-xl-3 col-sm-6 col-lg-4">
                     <div class="wsus__product_item">
                         <span class="wsus__new">New</span>
                         <a class="wsus__pro_link" href="product_details.html">
@@ -285,6 +222,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-xl-3 col-sm-6 col-lg-4">
                     <div class="wsus__product_item">
                         <span class="wsus__minus">-20%</span>
@@ -314,6 +252,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-xl-3 col-sm-6 col-lg-4">
                     <div class="wsus__product_item">
                         <span class="wsus__new">New</span>
@@ -344,6 +283,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-xl-3 col-sm-6 col-lg-4">
                     <div class="wsus__product_item">
                         <span class="wsus__minus">-20%</span>
@@ -372,7 +312,8 @@
                             <a class="add_cart" href="#">add to cart</a>
                         </div>
                     </div>
-                </div>
+                </div> --}}
+
 
             </div>
         </div>

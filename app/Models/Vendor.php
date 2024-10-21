@@ -3,10 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Str;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class Vendor extends Authenticatable
 {
@@ -55,4 +56,17 @@ class Vendor extends Authenticatable
     {
         return $this->morphOne(Profile::class, 'profileable');
     }
+
+
+    public function getCoverImageUrlAttribute()
+    {
+        if(!$this->image){
+            return asset("assetDashboard/assets/images/default_cover.png");
+        }
+        if (Str::startsWith($this->image, ['http://', 'https://'])) {
+            return $this->image;
+        }
+        return asset("storage/" . $this->image);
+    }
+
 }

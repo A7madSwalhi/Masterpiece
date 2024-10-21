@@ -47,4 +47,9 @@ class User extends Authenticatable
     {
         return $this->morphOne(Profile::class, 'profileable');
     }
+
+    public function reviews()
+    {
+        return $this->hasMany(ProductReview::class,'user_id','id');
+    }
 }

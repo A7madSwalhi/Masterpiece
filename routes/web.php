@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\dashboard\BrandsController;
+use App\Http\Controllers\admin\dashboard\CouponsController;
 use App\Http\Controllers\Admin\dashboard\ProductsController;
 use App\Http\Controllers\Front\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +45,7 @@ route::get('/products/{product:slug}',[FrontProductsController::class,'show'])->
 route::resource('cart',CartController::class);
 
 
+
 require __DIR__.'/auth.php';
 
 require __DIR__.'/admin-auth.php';
@@ -82,6 +84,9 @@ Route::prefix('admin')->as('admin.')->middleware('auth:admin')->group(function (
 
     Route::get('/profile/{id}', [AdminProfileController::class, 'edit'])->name('profile');
     Route::put('/profile/{id}', [AdminProfileController::class, 'update'])->name('profile.update');
+
+    Route::resource('/coupons',CouponsController::class);
+
 });
 
 

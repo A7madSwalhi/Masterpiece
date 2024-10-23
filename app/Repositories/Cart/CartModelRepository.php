@@ -3,6 +3,7 @@
 namespace App\Repositories\Cart;
 
 use App\Models\Cart;
+use App\Models\Coupon;
 use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -78,5 +79,16 @@ class CartModelRepository implements CartRepository
             }
             return $item->quantity * $item->product->regular_price;
         });
+    }
+
+    public function discount(){
+
+        $coupon = Cart::whereNotNull('coupon_id')->first();
+        if ($coupon) {
+            $co = Coupon::find($coupon->coupon_id);
+            return $this->total() *  $co->discount;
+        }
+
+        return 0.00;
     }
 }

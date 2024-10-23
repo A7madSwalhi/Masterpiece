@@ -68,6 +68,22 @@
                 ],
             ],
         ],
+        [
+            'main_icon' => "bx bx-category",
+            'main_name'=> "Coupons System",
+            'sub_routes' => [
+                [
+                    'icon' => 'bx bx-right-arrow-alt',
+                    'route' => 'admin.coupons.index',
+                    'title' => 'All Coupons'
+                ],
+                [
+                    'icon' => 'bx bx-right-arrow-alt',
+                    'route' => 'admin.coupons.create',
+                    'title' => 'Add Coupon'
+                ],
+            ],
+        ],
     ];
 
 

@@ -368,33 +368,7 @@
         </div>
     </div>
 
-    {{-- @push('scripts')
-        <script>
-            $(document).ready(function () {
-                $('#add-to-cart-form').on('submit', function (e) {
-                    e.preventDefault(); // Prevent form from submitting normally
 
-                    let formData = $(this).serialize();
-
-                    $.ajax({
-                        url: $(this).attr('action'),
-                        method: 'POST',
-                        data: formData,
-                        success: function (response) {
-
-                            toastr.success('Item added to cart successfully!');
-
-
-                        },
-                        error: function (xhr) {
-                            // Handle error
-                            toastr.error('Failed to add item to cart.');
-                        }
-                    });
-                });
-            });
-        </script>
-    @endpush --}}
 
 
 </x-front-layout>

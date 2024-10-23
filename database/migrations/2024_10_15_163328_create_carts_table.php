@@ -23,6 +23,7 @@ return new class extends Migration
                 ->cascadeOnDelete();
             $table->unsignedSmallInteger('quantity')->default(1);
             $table->json('options')->nullable();
+            $table->foreignId('coupon_id')->nullable()->constrained('coupons')->cascadeOnDelete();
             $table->timestamps();
         });
     }

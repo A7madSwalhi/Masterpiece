@@ -84,4 +84,6 @@ class CartController extends Controller
             'message' => 'Item deleted!',
         ];
     }
+
+
 }

@@ -25,6 +25,6 @@
     <h5>sub total <span>{{ Currency::format($total) }}</span></h5>
     <div class="wsus__minicart_btn_area">
         <a class="common_btn" href="{{ route('cart.index') }}">view cart</a>
-        <a class="common_btn" href="check_out.html">checkout</a>
+        <a class="common_btn" href="{{ route('checkout') }}">checkout</a>
     </div>
 </div>

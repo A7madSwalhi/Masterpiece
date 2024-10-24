@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\dashboard\BrandsController;
 use App\Http\Controllers\admin\dashboard\CouponsController;
 use App\Http\Controllers\Admin\dashboard\ProductsController;
+use App\Http\Controllers\front\CheckoutController;
 use App\Http\Controllers\Front\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
@@ -43,6 +44,9 @@ route::get('/products',[FrontProductsController::class,'index'])->name('products
 route::get('/products/{product:slug}',[FrontProductsController::class,'show'])->name('products.show');
 
 route::resource('cart',CartController::class);
+
+route::get('checkout',[CheckoutController::class,'create'])->name('checkout');
+route::post('checkout',[CheckoutController::class,'store']);
 
 
 

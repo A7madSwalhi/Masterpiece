@@ -1,29 +1,37 @@
 
-<div class="col-xl-3 col-sm-6 col-lg-4">
+
     <div class="wsus__product_item">
-        <span class="wsus__new">New</span>
-        @if ($product->discount_price)
+        @if ($product->created_at->greaterThanOrEqualTo(now()->subWeek()))
+            <span class="wsus__new">New</span>
+        @endif
+        @if ($product->discount_percentage)
             <span class="wsus__minus">-{{ $product->discount_percentage }}%</span>
         @endif
         <a class="wsus__pro_link" href="{{ route("products.show",$product->slug) }}">
             <img src="{{ $product->image_url}}" alt="product" class="img-fluid w-100 img_1" />
-            <img src="{{ asset('front/images/pro3_3.jpg') }}" alt="product" class="img-fluid w-100 img_2" />
+            @if ($product->galleries()->first()?->image)
+                <img src="{{ asset("storage/" . $product->galleries()->first()->image) }}" alt="product"
+                    class="img-fluid w-100 img_2" />
+            @endif
         </a>
         <ul class="wsus__single_pro_icon">
-            <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                        class="far fa-eye"></i></a></li>
-            <li><a href="#"><i class="far fa-heart"></i></a></li>
-            <li><a href="#"><i class="far fa-random"></i></a>
         </ul>
         <div class="wsus__product_details">
-            <a class="wsus__category" href="#">{{ $product->category->name }} </a>
+            <a class="wsus__category" href="#">{{ substr($product->category->name,0,15) }} </a>
+            @php
+                $avgRating = $product->reviews()->avg('rating');
+                $fullRating = round($avgRating);
+            @endphp
             <p class="wsus__pro_rating">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-                <span>(133 review)</span>
+            @for ($i = 1; $i <= 5; $i++)
+                @if ($i <= $fullRating)
+                <i class="fas fa-star" style="color:#f5b301"></i>
+                @else
+                <i class="far fa-star"></i>
+                @endif
+            @endfor
+                {{-- <i class="fas fa-star-half-alt"></i> --}}
+                <span>({{ count($product->reviews)  }} review)</span>
             </p>
             <a class="wsus__pro_name" href="{{ route("products.show",$product->slug) }}">{{ $product->name }}</a>
             @if ($product->discount_price)
@@ -49,7 +57,7 @@
 
         </div>
     </div>
-</div>
+
 
 
 

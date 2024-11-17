@@ -36,7 +36,7 @@ class ProductsController extends Controller
     {
         $product = new Product();
         $gallary= $product->galleries;
-        $vendors = Vendor::pluck('name', 'id');
+        $vendors = Vendor::pluck('shop_name', 'id');
         $brands = Brand::pluck( 'name', 'id');
         $categories = Category::pluck('name', 'id');
         // dd($category);
@@ -55,6 +55,27 @@ class ProductsController extends Controller
             'slug' => Str::slug($request->post('name'))
         ]);
 
+        if($request->post('product_colors') || $request->post('product_sizes')){
+
+            $options = [];
+
+            if($request->post('product_colors')){
+                $colors =explode(',',$request->post('product_colors'));
+                $options['colors'] = $colors;
+            }
+
+            if($request->post('product_sizes')){
+                $sizes =explode(',',$request->post('product_sizes'));
+                $options['sizes'] = $sizes;
+            }
+
+            $jsonData = json_encode($options, JSON_PRETTY_PRINT);
+
+            $request->merge([
+            'options' => $jsonData
+            ]);
+        }
+
         $data = $request->except('image','images','tags');
 
         $data['image'] = Product::uploadImgae($request);
@@ -72,6 +93,9 @@ class ProductsController extends Controller
                 $product->galleries()->create(['image' => $imagePath]);
             }
         }
+
+
+
 
         $tags =explode(',',$request->post('tags'));
         $tag_ids=[];
@@ -108,12 +132,27 @@ class ProductsController extends Controller
     {
         $product = Product::findOrFail($id);
         $tags = implode(',', $product->tags()->pluck('name')->toArray());
+        // dd($tags );
         $vendors = Vendor::pluck('name', 'id');
         $brands = Brand::pluck( 'name', 'id');
         $categories = Category::pluck('name', 'id');
         $gallary= $product->galleries;
-        // dd($gallary);
-        return view("Admin.Dashboard.Products.edit",compact('product','vendors','brands','categories','tags','gallary'));
+
+
+        if($product->options){
+
+            $options =  json_decode($product->options, true);
+            $colors =implode(',', $options['colors']) ;
+            $sizes =implode(',', $options['sizes']) ;
+            // dd($colors,$sizes);
+            return view("Admin.Dashboard.Products.edit",compact('product','vendors','brands','categories','tags','gallary','sizes','colors'));
+
+        }else{
+
+
+            return view("Admin.Dashboard.Products.edit",compact('product','vendors','brands','categories','tags','gallary'));
+        }
+
     }
 
     /**
@@ -136,12 +175,33 @@ class ProductsController extends Controller
             'slug' => Str::slug($request->post('name'))
         ]);
 
+        if($request->post('product_colors') || $request->post('product_sizes')){
+
+            $options = [];
+
+            if($request->post('product_colors')){
+                $colors =explode(',',$request->post('product_colors'));
+                $options['colors'] = $colors;
+            }
+
+            if($request->post('product_sizes')){
+                $sizes =explode(',',$request->post('product_sizes'));
+                $options['sizes'] = $sizes;
+            }
+
+            $jsonData = json_encode($options, JSON_PRETTY_PRINT);
+
+            $request->merge([
+            'options' => $jsonData
+            ]);
+        }
+
         // Get all data except the images and tags fields
         $data = $request->except('image', 'images', 'tags');
 
         // Handle image upload if new image is provided
         if ($request->hasFile('image')) {
-            $data['image'] = Product::uploadImage($request);
+            $data['image'] = Product::uploadImgae($request);
         }
 
         // Update the product with the new data

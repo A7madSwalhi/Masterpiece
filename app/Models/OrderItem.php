@@ -18,7 +18,7 @@ class OrderItem extends Pivot
 
     public function product()
     {
-        return $this->belongsTo(Product::class)->withDefault([
+        return $this->belongsTo(Product::class,'product_id','id')->withDefault([
             'name' => $this->product_name
         ]);
     }
@@ -26,5 +26,9 @@ class OrderItem extends Pivot
     public function order()
     {
         return $this->belongsTo(Order::class);
+    }
+
+    public function vendor(){
+        return $this->belongsTo(Vendor::class,'vendor_id','id');
     }
 }

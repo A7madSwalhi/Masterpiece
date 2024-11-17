@@ -6,7 +6,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <h4>forget password</h4>
+                            <h4>Checkout</h4>
                             <ul>
                                 <li><a href="{{ route('home') }}">Home</a></li>
                                 <li><a href="{{ route('cart.index') }}">Cart</a></li>
@@ -23,6 +23,8 @@
     <!--============================
         CHECK OUT PAGE START
     ==============================-->
+
+
     <section id="wsus__cart_view">
         <div class="container">
 
@@ -345,6 +347,17 @@
     });
 });
         </script>
+
+        @if ($errors->any())
+            <script>
+                $(document).ready(function() {
+                    @foreach ($errors->all() as $error)
+                        toastr.error("{{ $error }}");
+                    @endforeach
+                });
+            </script>
+        @endif
+        
     @endpush
 
 

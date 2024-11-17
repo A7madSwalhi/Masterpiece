@@ -25,6 +25,15 @@ class Vendor extends Authenticatable
         'name',
         'email',
         'password',
+        'shop_name',
+        'slug',
+        'cover_image',
+        'status',
+        'logo_image',
+        'description',
+        'cover_image',
+
+
     ];
 
     /**
@@ -54,19 +63,19 @@ class Vendor extends Authenticatable
 
     public function profile()
     {
-        return $this->morphOne(Profile::class, 'profileable');
+        return $this->morphOne(Profile::class, 'profileable')->withDefault();
     }
 
 
     public function getCoverImageUrlAttribute()
     {
-        if(!$this->image){
+        if(!$this->cover_image){
             return asset("assetDashboard/assets/images/default_cover.png");
         }
-        if (Str::startsWith($this->image, ['http://', 'https://'])) {
-            return $this->image;
+        if (Str::startsWith($this->cover_image, ['http://', 'https://'])) {
+            return $this->cover_image;
         }
-        return asset("storage/" . $this->image);
+        return asset("storage/" . $this->cover_image);
     }
 
 }

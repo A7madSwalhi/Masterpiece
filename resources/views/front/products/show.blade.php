@@ -71,7 +71,7 @@
 
                                 @for ($i = 1; $i <= 5; $i++)
                                     @if ($i <= $fullRating)
-                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star" style="color:#f5b301"></i>
                                     @else
                                     <i class="far fa-star"></i>
                                     @endif
@@ -117,6 +117,39 @@
 
                                 </div>
 
+                                <div class="wsus__selectbox">
+                                    <div class="row">
+
+                                        @if ($colors)
+                                            <div class="col-xl-6 col-sm-6">
+                                                <h5 class="mb-2">Color:</h5>
+                                                <select class="form-select" name="color" data-select2-id="select2-data-7-ly2p" tabindex="-1" aria-hidden="true">
+                                                    <option data-select2-id="select2-data-9-w29b" value="">Select Color</option>
+                                                    @foreach ($colors as $color)
+                                                        <option value="{{$color}}">{{ $color }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        @endif
+
+
+
+                                        @if ($sizes)
+                                            <div class="col-xl-6 col-sm-6">
+                                                <h5 class="mb-2">Size:</h5>
+                                                <select class="form-select" name="size" data-select2-id="select2-data-7-ly2p" tabindex="-1" aria-hidden="true">
+                                                    <option data-select2-id="select2-data-9-w29b" value="">Select Size</option>
+                                                    @foreach ($sizes as $size)
+                                                        <option value="{{$size}}">{{ $size }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        @endif
+
+                                    </div>
+
+                                </div>
+
 
                                 <ul class="wsus__button_area">
                                     <li><button type="submit" class="add_cart" href="#">add to cart</button></li>
@@ -126,7 +159,7 @@
                                         padding: 7px 11px;
                                         border-radius: 100%;" href="javascript:;" class="add_to_wishlist" data-id="{{$product->id}}"><i class="fal fa-heart"></i></a></li>
 
-                                    <li>
+                                    {{-- <li>
                                         <button type="button" style="border: 1px solid gray;
                                         padding: 7px 11px;
                                         margin-left: 7px;
@@ -134,15 +167,16 @@
                                             <i class="far fa-comment-alt text-light"></i>
                                         </button>
 
-                                    </li>
+                                    </li> --}}
 
 
 
 
                                 </ul>
                             </form>
-
-                            <p class="brand_model"><span>brand :</span> {{$product->brand->name}}</p>
+                            @if ($product->brand)
+                                <p class="brand_model"><span>brand :</span> {{$product->brand->name}}</p>
+                            @endif
                         </div>
                     </div>
 
@@ -180,7 +214,7 @@
                                         <div class="col-xl-12">
                                             <div class="wsus__description_area">
                                                 {{-- {!!$product->long_description!!} --}}
-                                               {{ $product->long_description }}
+                                                {{ $product->long_description }}
                                             </div>
                                         </div>
                                     </div>
@@ -207,7 +241,7 @@
                                                         <p><span>Phone:</span> {{$product->vendor->profile->phone}}</p>
                                                         <p><span>Email:</span> {{$product->vendor->email}}</p>
                                                     @endif
-                                                    <a href="vendor_details.html" class="see_btn">visit store</a>
+                                                    <a href="{{ route('products.index') . '?vendor_id=' . $product->vendor->id  }}" class="see_btn">visit store</a>
                                                 </div>
                                             </div>
                                             <div class="col-xl-12">
@@ -221,116 +255,109 @@
                                 </div>
 
 
-                                <div class="tab-pane fade" id="pills-contact2" role="tabpanel"
-                                    aria-labelledby="pills-contact-tab2">
+                                <div class="tab-pane fade" id="pills-contact2" role="tabpanel">
                                     <div class="wsus__pro_det_review">
                                         <div class="wsus__pro_det_review_single">
                                             <div class="row">
                                                 <div class="col-xl-8 col-lg-7">
-                                                    <div class="wsus__comment_area">
-                                                        <h4>Reviews <span>{{count($product->reviews)}}</span></h4>
-                                                        @foreach ($product->reviews as $review)
-                                                        <div class="wsus__main_comment">
-                                                            <div class="wsus__comment_img">
-                                                                <img src="{{asset($review->user->profile->image)}}" alt="user"
-                                                                    class="img-fluid w-100">
+                                                    <div class="wsus__comment_area" style="max-height: 400px;overflow-y: auto;">
+
+                                                        <h4>Reviews <span>{{ count($product->reviews) }}</span></h4>
+
+                                                        @forelse ($product->reviews as $review )
+                                                            <div class="wsus__main_comment">
+                                                                <div class="wsus__comment_img">
+                                                                    <img src="{{ $review->user->profile->image_url }}" alt="user" class="img-fluid w-100">
+                                                                    {{-- <img src="{{ dd($review->user->profile) }}" alt="user" class="img-fluid w-100"> --}}
+                                                                </div>
+                                                                <div class="wsus__comment_text reply">
+
+                                                                    <h6>{{ $review->user->profile->first_name . " " . $review->user->profile->last_name }}<span>{{ $review->rating }} <i class="fas fa-star" aria-hidden="true"></i></span></h6>
+
+                                                                    <span>{{ $review->created_at }}</span>
+
+
+                                                                    <p>{{ $review->review }}</p>
+
+
+                                                                </div>
                                                             </div>
-                                                            <div class="wsus__comment_text reply">
-                                                                <h6>{{$review->user->name}} <span>{{$review->rating}} <i
-                                                                            class="fas fa-star"></i></span></h6>
-                                                                <span>{{date('d M Y', strtotime($review->created_at))}}</span>
-                                                                <p>{{$review->review}}
-                                                                </p>
-                                                                <ul class="">
-                                                                    @if (count($review->productReviewGalleries) > 0)
 
-                                                                    @foreach ($review->productReviewGalleries as $image)
+                                                        @empty
+                                                            <p>there is no reviews</p>
+                                                        @endforelse
 
-                                                                    <li><img src="{{asset($image->image)}}" alt="product"
-                                                                            class="img-fluid "></li>
-                                                                    @endforeach
-                                                                    @endif
 
+
+
+
+                                                        {{-- <div id="pagination">
+                                                            <nav aria-label="Page navigation example">
+                                                                <ul class="pagination">
+                                                                    <li class="page-item">
+                                                                        <a class="page-link" href="#" aria-label="Previous">
+                                                                            <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="page-item"><a class="page-link page_active" href="#">1</a>
+                                                                    </li>
+                                                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                                                    <li class="page-item"><a class="page-link" href="#">4</a></li>
+                                                                    <li class="page-item">
+                                                                        <a class="page-link" href="#" aria-label="Next">
+                                                                            <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                                                                        </a>
+                                                                    </li>
                                                                 </ul>
-                                                            </div>
-                                                        </div>
-                                                        @endforeach
-
-                                                        {{-- <div class="mt-5">
-                                                            @if ($reviews->hasPages())
-                                                                {{$reviews->links()}}
-                                                            @endif
+                                                            </nav>
                                                         </div> --}}
+
+
                                                     </div>
                                                 </div>
-                                                {{-- <div class="col-xl-4 col-lg-5 mt-4 mt-lg-0">
-                                                    @auth
-                                                    @php
-                                                        $isBrought = false;
-                                                        $orders = \App\Models\Order::where(['user_id' => auth()->user()->id, 'order_status' => 'delivered'])->get();
-                                                        foreach ($orders as $key => $order) {
-                                                           $existItem = $order->orderProducts()->where('product_id', $product->id)->first();
+                                                <div class="col-xl-4 col-lg-5 mt-4 mt-lg-0" style="position: relative;">
+                                                    <div class="wsus__post_comment rev_mar" id="sticky_sidebar3" style="will-change: transform; transform: translateZ(0px);">
 
-                                                           if($existItem){
-                                                            $isBrought = true;
-                                                           }
-                                                        }
-
-                                                    @endphp
-
-                                                    @if ($isBrought === true)
-                                                    <div class="wsus__post_comment rev_mar" id="sticky_sidebar3">
                                                         <h4>write a Review</h4>
-                                                        <form action="{{route('user.review.create')}}" enctype="multipart/form-data" method="POST">
+
+                                                        <form action="{{ route('products.review.submit',$product->id) }}" method="POST">
                                                             @csrf
                                                             <p class="rating">
-                                                                <span>select your rating : </span>
+                                                                <span>Select your rating:</span>
+                                                                <i class="fas fa-star" aria-hidden="true" data-value="1"></i>
+                                                                <i class="fas fa-star" aria-hidden="true" data-value="2"></i>
+                                                                <i class="fas fa-star" aria-hidden="true" data-value="3"></i>
+                                                                <i class="fas fa-star" aria-hidden="true" data-value="4"></i>
+                                                                <i class="fas fa-star" aria-hidden="true" data-value="5"></i>
                                                             </p>
 
+                                                            <!-- Hidden input to store selected rating -->
+                                                            <input type="hidden" name="rating" id="ratingValue" value="">
+
                                                             <div class="row">
-
-                                                                <div class="col-xl-12 mb-4">
-                                                                    <div class="wsus__single_com">
-                                                                        <select name="rating" id="" class="form-control">
-                                                                            <option value="">Select</option>
-                                                                            <option value="1">1</option>
-                                                                            <option value="2">2</option>
-                                                                            <option value="3">3</option>
-                                                                            <option value="4">4</option>
-                                                                            <option value="5">5</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-
                                                                 <div class="col-xl-12">
                                                                     <div class="col-xl-12">
                                                                         <div class="wsus__single_com">
-                                                                            <textarea cols="3" rows="3" name="review"
-                                                                                placeholder="Write your review"></textarea>
+                                                                            <textarea name="review" cols="3" rows="3" placeholder="Write your review"></textarea>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="img_upload">
-                                                                <div class="">
-                                                                    <input type="file" name="images[]" multiple>
-                                                                </div>
-                                                            </div>
-                                                            <input type="hidden" name="product_id" id="" value="{{$product->id}}">
-                                                            <input type="hidden" name="vendor_id" id="" value="{{$product->vendor_id}}">
 
-                                                            <button class="common_btn" type="submit">submit
-                                                                review</button>
+                                                            <button class="common_btn" type="submit">
+                                                                submit review
+                                                            </button>
                                                         </form>
-                                                    </div>
-                                                    @endif
-                                                    @endauth
-
-                                                </div> --}}
+                                                    </div><div id="sticky_sidebar3" class="wsus__post_comment rev_mar jquery-stickit-spacer" style="visibility: hidden !important; display: none !important;"></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+
+
 
                             </div>
                         </div>
@@ -367,6 +394,82 @@
             </div>
         </div>
     </div>
+
+    @push('scripts')
+        <script>
+            const stars = document.querySelectorAll('.rating i');
+            const ratingValueInput = document.getElementById('ratingValue');
+            let selectedRating = 0;
+
+            stars.forEach((star) => {
+                // Handle hover effect
+                star.addEventListener('mouseover', () => {
+                    resetStars();
+                    highlightStars(star.getAttribute('data-value'));
+                });
+
+                star.addEventListener('mouseout', () => {
+                    resetStars();
+                    if (selectedRating) highlightStars(selectedRating);
+                });
+
+                // Handle click event
+                star.addEventListener('click', () => {
+                    selectedRating = star.getAttribute('data-value');
+                    ratingValueInput.value = selectedRating;
+                    highlightStars(selectedRating);
+                });
+            });
+
+            // Reset all stars to default
+            function resetStars() {
+                stars.forEach((star) => {
+                    star.classList.remove('hovered', 'selected');
+                });
+            }
+
+            // Highlight stars up to the given rating
+            function highlightStars(rating) {
+                stars.forEach((star) => {
+                    if (star.getAttribute('data-value') <= rating) {
+                        star.classList.add('selected');
+                    }
+                });
+            }
+        </script>
+
+        @if ($errors->any())
+            <script>
+                $(document).ready(function() {
+                    @foreach ($errors->all() as $error)
+                        toastr.error("{{ $error }}");
+                    @endforeach
+                });
+            </script>
+        @endif
+
+    @endpush
+
+    @push('styles')
+        <style>
+            /* Basic star styling */
+            .rating {
+                display: flex;
+                align-items: center;
+            }
+
+            .rating i {
+                font-size: 24px;
+                color: #ccc;
+                cursor: pointer;
+                transition: color 0.2s;
+            }
+
+            .rating i.hovered, .rating i.selected {
+                color: #f5b301; /* Active star color */
+            }
+        </style>
+    @endpush
 
 
 

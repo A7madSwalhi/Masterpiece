@@ -29,20 +29,47 @@ class CartModelRepository implements CartRepository
         return $this->items;
     }
 
-    public function add(Product $product, $quantity = 1)
+    public function add(Product $product, $quantity = 1, $color=Null, $size=Null)
     {
         $item =  Cart::where('product_id', '=', $product->id)
             ->first();
+        if ($size || $color) {
+                $options = [];
 
-        if (!$item) {
-            $cart = Cart::create([
-                'user_id' => Auth::id(),
-                'product_id' => $product->id,
-                'quantity' => $quantity,
-            ]);
-            $this->get()->push($cart);
-            return $cart;
+                if($color){
+                    $options['color'] = $color;
+                }
+
+                if($size){
+                    $options['size'] = $size;
+                }
+
+                $jsonData = json_encode($options, JSON_PRETTY_PRINT);
+
+            if (!$item) {
+                $cart = Cart::create([
+                    'user_id' => Auth::id(),
+                    'product_id' => $product->id,
+                    'quantity' => $quantity,
+                    'options' => $jsonData,
+                ]);
+                $this->get()->push($cart);
+                return $cart;
+            }
+        }else{
+
+            if (!$item) {
+                $cart = Cart::create([
+                    'user_id' => Auth::id(),
+                    'product_id' => $product->id,
+                    'quantity' => $quantity,
+                ]);
+                $this->get()->push($cart);
+                return $cart;
+            }
+
         }
+
 
         return $item->increment('quantity', $quantity);
     }

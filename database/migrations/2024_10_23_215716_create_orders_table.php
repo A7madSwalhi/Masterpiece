@@ -23,19 +23,20 @@ return new class extends Migration
             $table->enum('status', ['pending', 'confirmed','processing', 'delivering', 'completed', 'cancelled', 'refunded'])
                 ->default('pending');
             $table->enum('payment_status', ['pending', 'paid', 'failed'])
-                ->default('paid');
+                ->default('pending');
             $table->float('shipping')->default(0);
             $table->float('tax')->default(0);
             $table->float('discount')->default(0);
             $table->float('total')->default(0);
             $table->string('coupon')->nullable();
-            $table->date('confirmed_date')->nullable();
-            $table->date('processing_date')->nullable();
-            $table->date('shipped_date')->nullable();
-            $table->date('delivered_date')->nullable();
-            $table->date('cancel_date')->nullable();
-            $table->date('refunded_date')->nullable();
-            $table->date('refunded_reason')->nullable();
+            $table->timestamp('confirmed_date')->nullable();
+            $table->timestamp('processing_date')->nullable();
+            $table->timestamp('shipped_date')->nullable();
+            $table->timestamp('delivered_date')->nullable();
+            $table->timestamp('cancel_date')->nullable();
+            $table->timestamp('refunded_date')->nullable();
+            $table->text('refunded_reason')->nullable();
+            $table->enum('refunded_status',['pending','rejected','accepted'])->nullable();
             $table->timestamps();
         });
     }

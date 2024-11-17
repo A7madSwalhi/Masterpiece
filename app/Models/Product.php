@@ -97,6 +97,7 @@ class Product extends Model
 
 
 
+
         /*
         //
         *
@@ -131,6 +132,49 @@ class Product extends Model
                     $builder->whereNull('products.discount_price');
                 }
             });
+        }
+
+        public function scopeShopFilter(Builder $builder, $filters)
+        {
+            // Filter by product name (case-insensitive search)
+            if (!empty($filters['name'])) {
+                $builder->where('name', 'like', '%' . $filters['name'] . '%');
+            }
+
+            // Filter by vendor ID
+            if (!empty($filters['vendor_id'])) {
+                $builder->where('vendor_id', $filters['vendor_id']);
+            }
+
+            // Filter by category ID and its child categories
+            if (!empty($filters['category_id'])) {
+                $categoryId = $filters['category_id'];
+                $builder->where(function ($query) use ($categoryId) {
+                    $query->where('catetgory_id', $categoryId)  // Use catetgory_id here
+                        ->orWhereIn('catetgory_id', function ($subQuery) use ($categoryId) {
+                            $subQuery->select('id')
+                                ->from('categories')
+                                ->where('parent_id', $categoryId); // Adjust column name if necessary
+                        });
+                });
+            }
+
+            // Filter by brand ID
+            if (!empty($filters['brand_id'])) {
+                $builder->where('brand_id', $filters['brand_id']);
+            }
+
+            // Filter by featured status
+            if (isset($filters['featured'])) {
+                $builder->where('featured', (bool) $filters['featured']);
+            }
+
+            // Filter by products with a discount price
+            if (isset($filters['discount_price']) && $filters['discount_price'] === true) {
+                $builder->whereNotNull('discount_price');
+            }
+
+            return $builder;
         }
 
 
@@ -202,7 +246,7 @@ class Product extends Model
             }
 
 
-            return "No Discount";
+            return false;
         }
 
 

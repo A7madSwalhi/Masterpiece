@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Intl\Countries;
 use App\Repositories\Cart\CartRepository;
+use SebastianBergmann\Type\NullType;
 
 class CheckoutController extends Controller
 {
@@ -35,11 +36,23 @@ class CheckoutController extends Controller
             'addr.billing.email' => ['required', 'string', 'max:255'],
             'addr.billing.phone_number' => ['required', 'string', 'max:255'],
             'addr.billing.city' => ['required', 'string', 'max:255'],
+            'addr.billing.street_address' => ['required', 'string', 'max:255'],
+            'addr.billing.state' => ['required', 'string', 'max:255'],
+            'addr.billing.postal_code' => ['required', 'string', 'max:255'],
+
+            'addr.shipping.first_name' => ['required', 'string', 'max:255'],
+            'addr.shipping.last_name' => ['required', 'string', 'max:255'],
+            'addr.shipping.email' => ['required', 'string', 'max:255'],
+            'addr.shipping.phone_number' => ['required', 'string', 'max:255'],
+            'addr.shipping.city' => ['required', 'string', 'max:255'],
+            'addr.shipping.street_address' => ['required', 'string', 'max:255'],
+            'addr.shipping.state' => ['required', 'string', 'max:255'],
+            'addr.shipping.postal_code' => ['required', 'string', 'max:255'],
         ]);
 
         $items = $cart->get()->groupBy('product.vendor_id')->all();
         $firstitem = reset($items)->first();
-        if ($firstitem ) {
+        if ($firstitem->coupon_id) {
             $coupon = Coupon::find($firstitem->coupon_id)->coupon_code;
         }else{
             $coupon = null;
@@ -54,7 +67,8 @@ class CheckoutController extends Controller
                     'payment_method' => 'cod',
                     'total' => $cart->total(),
                     'discount' => $cart->discount(),
-                    'coupon' => $coupon
+                    'coupon' => $coupon ?? '',
+                    'currency'=>'jod',
             ]);
 
             foreach ($items as $vendor_id => $cart_items) {
@@ -98,6 +112,11 @@ class CheckoutController extends Controller
             throw $e;
         }
 
-        return redirect()->route('home' );
+        return redirect()->route('orders.payments.create',$order->id );
+    }
+
+    public function invoice(Order $order){
+
+        return view('front.payments.invoice',compact('order'));
     }
 }

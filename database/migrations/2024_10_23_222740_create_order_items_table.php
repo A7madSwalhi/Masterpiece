@@ -22,7 +22,7 @@ return new class extends Migration
             $table->float('price');
             $table->unsignedSmallInteger('quantity')->default(1);
             $table->json('options')->nullable();
-
+            $table->boolean('process_status')->default(0);
             $table->unique(['order_id', 'product_id']);
             $table->timestamps();
         });

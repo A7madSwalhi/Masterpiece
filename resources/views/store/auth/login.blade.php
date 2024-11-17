@@ -19,7 +19,7 @@
 	<link href="{{asset("assetDashboard/" . "assets/css/app.css")}}" rel="stylesheet">
 	<link href="{{asset("assetDashboard/" . "assets/css/icons.css")}}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-	<title>Admin Login</title>
+	<title>Vendor Login</title>
 </head>
 
 <body class="bg-login">

@@ -324,6 +324,15 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <x-flashtoaster />
+    @if ($errors->any())
+            <script>
+                $(document).ready(function() {
+                    @foreach ($errors->all() as $error)
+                        toastr.error("{{ $error }}");
+                    @endforeach
+                });
+            </script>
+    @endif
 
 
 </body>

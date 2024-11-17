@@ -18,6 +18,20 @@
                         {{-- <x-form.input type="text" name="name" id="tag-input" :value="$product->tags"/> --}}
                     </div>
 
+                    <div class="mb-3">
+                        <x-form.label id="tag-product_colors" class="form-label">Product Colors</x-form.label>
+                        <input type="text" name="product_colors" class="form-control visually-hidden" data-role="tagsinput" value="{{ old('product_colors',$colors ?? '') }}">
+                        <x-form.validation-feedback name="product_colors" />
+                        {{-- <x-form.input type="text" name="name" id="tag-input" :value="$product->tags"/> --}}
+                    </div>
+
+                    <div class="mb-3">
+                        <x-form.label id="tag-product_sizes" class="form-label">Product Sizes</x-form.label>
+                        <input type="text" name="product_sizes" class="form-control visually-hidden" data-role="tagsinput" value="{{ old('product_sizes',$sizes ?? '') }}">
+                        <x-form.validation-feedback name="product_sizes" />
+                        {{-- <x-form.input type="text" name="name" id="tag-input" :value="$product->tags"/> --}}
+                    </div>
+
                     {{-- <div class="mb-3">
                         <label for="inputProductTitle" class="form-label">Product Size</label>
                         <input type="text" name="product_size" class="form-control visually-hidden" data-role="tagsinput" value="Small,Midium,Large ">
@@ -93,7 +107,7 @@
                         <div class="col-md-6">
                             <x-form.label id="SKU " class="form-label">Product SKU</x-form.label>
                             {{-- <x-form.input type="text" name="SKU" id="SKU" :placeholder="00.00" /> --}}
-                            <x-form.input type="text" name="SKU" id="SKU" placeholder="00.00" :value="$product->SKU"/>
+                            <x-form.input type="text" name="SKU" id="SKU" :value="$product->SKU"/>
                         </div>
 
 

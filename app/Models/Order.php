@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
@@ -58,6 +59,10 @@ class Order extends Model
             ->where('type', '=', 'shipping');
     }
 
+    public function payment(){
+        return $this->hasOne(Payment::class,'order_id','id');
+    }
+
 
     protected static function booted()
     {
@@ -76,5 +81,22 @@ class Order extends Model
             return $number + 1;
         }
         return $year . '0001';
+    }
+
+    public function scopeFilter(Builder $builder, $filters)
+    {
+
+        $builder->when($filters['invoice_no'] ?? false, function($builder, $value) {
+            $builder->where('orders.invoice_no', '=', $value);
+        });
+
+        $builder->when($filters['payment_method'] ?? false, function($builder, $value) {
+            $builder->where('orders.payment_method', '=', $value);
+        });
+
+        $builder->when($filters['status'] ?? false, function($builder, $value) {
+            $builder->where('orders.status', '=', $value);
+        });
+
     }
 }

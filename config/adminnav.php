@@ -84,6 +84,37 @@
                 ],
             ],
         ],
+        [
+            'main_icon' => "bx bx-category",
+            'main_name'=> "Orders Manage",
+            'sub_routes' => [
+                [
+                    'icon' => 'bx bx-right-arrow-alt',
+                    'route' => 'admin.orders.pending',
+                    'title' => 'Pending Orders'
+                ],
+                [
+                    'icon' => 'bx bx-right-arrow-alt',
+                    'route' => 'admin.orders.confirmed',
+                    'title' => 'Confirmed Orders'
+                ],
+                [
+                    'icon' => 'bx bx-right-arrow-alt',
+                    'route' => 'admin.orders.processing',
+                    'title' => 'Processing Orders'
+                ],
+                [
+                    'icon' => 'bx bx-right-arrow-alt',
+                    'route' => 'admin.orders.delivering',
+                    'title' => 'Delivering Orders'
+                ],
+                [
+                    'icon' => 'bx bx-right-arrow-alt',
+                    'route' => 'admin.orders.completed',
+                    'title' => 'Completed Orders'
+                ],
+            ],
+        ],
     ];
 
 

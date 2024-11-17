@@ -46,8 +46,21 @@
                                                         <a href="{{ route('products.show',$item->product->slug) }}">
                                                             {{ $item->product->name }}</p>
                                                         </a>
-                                                    {{-- <span>color: red</span>
-                                                    <span>size: XL</span> --}}
+                                                        @php
+                                                            if($item->options){
+                                                                $data = json_decode($item->options, true);
+                                                            }
+
+                                                        @endphp
+                                                        @if ($item->options)
+                                                            @if ($data['color'])
+                                                                <span>color: {{ $data['color'] }}</span>
+                                                            @endif
+                                                            @if ($data['size'])
+                                                                <span>size: {{ $data['size'] }}</span>
+                                                            @endif
+                                                        @endif
+
                                                 </td>
 
                                                 <td class="wsus__pro_status">

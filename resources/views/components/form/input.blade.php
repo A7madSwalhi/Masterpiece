@@ -1,5 +1,5 @@
 @props([
-    'type' => 'text', 'name', 'value' => ' ', 'required' => false, 'placeholder' => '', 'id'=>''
+    'type' => 'text', 'name', 'value' => '', 'required' => false, 'placeholder' => '', 'id'=>''
 ])
 
 
@@ -7,7 +7,7 @@
     id="{{$id}}"
     type="{{ $type }}"
     name="{{ $name }}"
-    value="{{ old($name, $value) }}"
+    value="{{old($name,$value)}}"
     {{ $attributes->class([
         'form-control',
         'is-invalid' => $errors->has($name)

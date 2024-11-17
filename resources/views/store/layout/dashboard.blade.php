@@ -44,7 +44,10 @@
 			</div>
 			<!--navigation-->
 
-                @include('store.partial.navigation')
+                {{-- @include('store.partial.navigation') --}}
+
+                <x-vendor-nav/>
+
 			<!--end navigation-->
 		</div>
 		<!--end sidebar wrapper -->

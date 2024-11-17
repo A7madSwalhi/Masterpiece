@@ -36,15 +36,40 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-        'product_id' => ['required', 'int', 'exists:products,id'],
-        'quantity' => ['nullable', 'int', 'min:1'],
-        ]);
+        if ($request->post('color') && $request->post('size')) {
+            $request->validate([
+                'product_id' => ['required', 'int', 'exists:products,id'],
+                'quantity' => ['nullable', 'int', 'min:1'],
+                'color' => ['required'],
+                'size'=>['required']
+            ]);
+        }elseif($request->post('color')){
+            $request->validate([
+                'product_id' => ['required', 'int', 'exists:products,id'],
+                'quantity' => ['nullable', 'int', 'min:1'],
+                'color' => ['required'],
+            ]);
+        }elseif($request->post('size')){
+            $request->validate([
+                'product_id' => ['required', 'int', 'exists:products,id'],
+                'quantity' => ['nullable', 'int', 'min:1'],
+                'size'=>['required']
+            ]);
+        }else{
+            $request->validate([
+                'product_id' => ['required', 'int', 'exists:products,id'],
+                'quantity' => ['nullable', 'int', 'min:1'],
+            ]);
+        }
 
         $product = Product::findOrFail($request->post('product_id'));
         $quantity = $request->post('quantity') ?? 1;
+        $color = $request->post('color') ?? Null;
+        $size = $request->post('size') ?? Null;
+
         // dd($request->post('quantity'));
-        $this->cart->add($product, $quantity);
+        
+        $this->cart->add($product, $quantity,$color,$size);
 
         if ($request->expectsJson()) {
 

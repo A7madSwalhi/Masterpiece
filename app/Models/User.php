@@ -45,7 +45,7 @@ class User extends Authenticatable
 
     public function profile()
     {
-        return $this->morphOne(Profile::class, 'profileable');
+        return $this->morphOne(Profile::class, 'profileable')->withDefault();
     }
 
     public function reviews()

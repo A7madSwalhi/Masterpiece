@@ -54,8 +54,9 @@
                 </div>
                 <div class="col-xl-5 col-md-6 col-lg-4 d-none d-lg-block">
                     <div class="wsus__search">
-                        <form>
-                            <input type="text" placeholder="Search...">
+                        <form action="{{ route('products.index') }}" method="GET">
+                            @csrf
+                            <input type="text" placeholder="Search..." name="name">
                             <button type="submit"><i class="far fa-search"></i></button>
                         </form>
                     </div>
@@ -73,7 +74,7 @@
                         </div>
                         <ul class="wsus__icon_area">
                             <li><a href="wishlist.html"><i class="fal fa-heart"></i><span>05</span></a></li>
-                            <li><a href="compare.html"><i class="fal fa-random"></i><span>03</span></a></li>
+
                             {{-- <li><a class="wsus__cart_icon" href="#"><i
                                         class="fal fa-shopping-bag"></i>
                                         @if (App\Facades\Cart::get()->count() > 0)
@@ -385,8 +386,9 @@
                         </ul>
 
                         <ul class="wsus__menu_item">
-                            <li><a class="active" href="{{ route('home') }}">home</a></li>
-                            <li><a href="product_grid_view.html">shop <i class="fas fa-caret-down"></i></a>
+                            <li><a class="{{ Request::routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">home</a></li>
+                            <li><a class="{{ Request::routeIs('products.index') ? 'active' : '' }}" href="{{ route('products.index') }}">Shop</a></li>
+                            {{-- <li><a href="product_grid_view.html">shop <i class="fas fa-caret-down"></i></a>
                                 <div class="wsus__mega_menu">
                                     <div class="row">
                                         <div class="col-xl-3 col-lg-3">
@@ -451,8 +453,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            </li>
-                            <li><a href="vendor.html">vendor</a></li>
+                            </li> --}}
+                            <li><a class="{{ Request::routeIs('vendors.index') ? 'active' : '' }}" href="{{ route('vendors.index') }}">vendors</a></li>
                             <li><a href="blog.html">blog</a></li>
                             <li><a href="daily_deals.html">campain</a></li>
                             <li class="wsus__relative_li"><a href="#">pages <i class="fas fa-caret-down"></i></a>
@@ -472,17 +474,17 @@
                                     <li><a href="brands.html">brands</a></li>
                                 </ul>
                             </li>
-                            <li><a href="track_order.html">track order</a></li>
+                            <li><a href="{{ route('track.index')  }}">track order</a></li>
                             <li><a href="daily_deals.html">daily deals</a></li>
                         </ul>
                         <ul class="wsus__menu_item wsus__menu_item_right">
 
                             @auth('web')
-                                <li><a href="track_order.html">track order</a></li>
+                                <li><a href="{{ route('track.index') }}">track order</a></li>
                                 <li class="wsus__relative_li">{{ Auth::guard('web')->user()->name}}<i class="fas fa-caret-down ms-2"></i>
                                 <ul class="wsus__menu_droapdown">
-                                    <li><a href="dsahboard.html">my account</a></li>
-                                    <li><a href="faqs.html">Profile</a></li>
+                                    <li><a href="{{ route('user.dashboard') }}">my account</a></li>
+                                    <li><a href="{{ route('user.profile',Auth::guard('web')->user()->id) }}">Profile</a></li>
                                     <li>
                                         <form action="{{ route('logout') }}" method="POST">
                                             @csrf
@@ -493,7 +495,7 @@
                             </li>
 
                             @else
-                            <li><a href="track_order.html">track order</a></li>
+                            <li><a href="{{ route('track.index')}} ">track order</a></li>
                             <li><a href="{{ route('login') }}">login</a></li>
                             @endauth
                         </ul>
@@ -514,12 +516,11 @@
         <span class="wsus__mobile_menu_close"><i class="fal fa-times"></i></span>
         <ul class="wsus__mobile_menu_header_icon d-inline-flex">
 
-            <li><a href="wishlist.html"><i class="far fa-heart"></i> <span>2</span></a></li>
 
-            <li><a href="compare.html"><i class="far fa-random"></i> </i><span>3</span></a></li>
         </ul>
-        <form>
-            <input type="text" placeholder="Search">
+        <form method="GET" action="{{ route('products.index') }}">
+            @csrf
+            <input type="text" placeholder="Search" name="name">
             <button type="submit"><i class="far fa-search"></i></button>
         </form>
 
@@ -576,7 +577,7 @@
                                     data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body">
                                         <ul>
-                                            <li><a href="#">home</a></li>
+                                            <li><a href="{{ route('home') }}">home</a></li>
                                             <li><a href="#">office</a></li>
                                             <li><a href="#">restaurent</a></li>
                                         </ul>
@@ -615,7 +616,7 @@
                 <div class="wsus__mobile_menu_main_menu">
                     <div class="accordion accordion-flush" id="accordionFlushExample2">
                         <ul>
-                            <li><a href="index.html">home</a></li>
+                            <li><a href="{{ route('home') }}">home</a></li>
                             <li><a href="#" class="accordion-button collapsed" data-bs-toggle="collapse"
                                     data-bs-target="#flush-collapseThree" aria-expanded="false"
                                     aria-controls="flush-collapseThree">shop</a>
@@ -631,7 +632,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <li><a href="vendor.html">vendor</a></li>
+                            <li><a href="{{ route('vendors.index') }}">vendors</a></li>
                             <li><a href="blog.html">blog</a></li>
                             <li><a href="daily_deals.html">campain</a></li>
                             <li><a href="#" class="accordion-button collapsed" data-bs-toggle="collapse"
@@ -653,7 +654,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <li><a href="track_order.html">track order</a></li>
+                            <li><a href={{  route('track.index')}} ">track order</a></li>
                             <li><a href="daily_deals.html">daily deals</a></li>
                         </ul>
                     </div>
@@ -713,10 +714,10 @@
                             <img src="{{ asset('front/images/logo_2.png') }}" alt="logo">
                         </a>
                         <a class="action" href="callto:+8896254857456"><i class="fas fa-phone-alt"></i>
-                            +8896254857456</a>
+                            +962788895911</a>
                         <a class="action" href="mailto:example@gmail.com"><i class="far fa-envelope"></i>
-                            example@gmail.com</a>
-                        <p><i class="fal fa-map-marker-alt"></i> San Francisco City Hall, San Francisco, CA</p>
+                            ahmad.alsawalhi10@gmail.com</a>
+                        <p><i class="fal fa-map-marker-alt"></i> Alsalt, Shafa Alameriah, JO</p>
                         <ul class="wsus__footer_social">
                             <li><a class="facebook" href="#"><i class="fab fa-facebook-f"></i></a></li>
                             <li><a class="twitter" href="#"><i class="fab fa-twitter"></i></a></li>
@@ -759,10 +760,7 @@
                         <h3>Subscribe To Our Newsletter</h3>
                         <p>Get all the latest information on Events, Sales and Offers.
                             Get all the latest information on Events.</p>
-                        <form>
-                            <input type="text" placeholder="Search...">
-                            <button type="submit" class="common_btn">subscribe</button>
-                        </form>
+
                         <div class="footer_payment">
                             <p>We're using safe payment for :</p>
                             <img src="{{ asset('front/images/credit2.png') }}" alt="card" class="img-fluid">
@@ -776,7 +774,7 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="wsus__copyright d-flex justify-content-center">
-                            <p>Copyright © 2021 One shop. All Rights Reserved.</p>
+                            <p>Copyright © {{ \Carbon\Carbon::now()->year }} Bazar shop. All Rights Reserved.</p>
                         </div>
                     </div>
                 </div>

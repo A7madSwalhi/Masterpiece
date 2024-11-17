@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('logo_image')->nullable();
             $table->string('cover_image')->nullable();
             $table->text('description')->nullable();
-            $table->enum('status',['active','inactive'])->default('active');
+            $table->enum('status',allowed: ['active','inactive'])->default('inactive');
             $table->timestamps();
         });
     }

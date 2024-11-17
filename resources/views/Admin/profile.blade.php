@@ -66,7 +66,7 @@
                                         <a href="{{route('admin.dashboard')}}"><i class="bx bx-home-alt"></i></a>
                                     </li>
                                     <li class="breadcrumb-item active">
-                                       Profile
+                                        Profile
                                     </li>
 
 							</ol>
@@ -300,6 +300,7 @@
 	<!--app JS-->
 	<script src="{{asset("assetDashboard/" . "assets/js/app.js")}}"></script>
     <script type="text/javascript">
+
         $(document).ready(function(){
             $('#image-form').change(function(e){
                 var reader = new FileReader();
@@ -311,6 +312,7 @@
         });
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     <x-flashtoaster />
 
 

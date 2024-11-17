@@ -135,7 +135,7 @@
                                         <h3>new arrivals</h3>
                                         <h1>men's fashion</h1>
                                         <h6>start at $99.00</h6>
-                                        <a class="common_btn" href="#">shop now</a>
+                                        <a class="common_btn" href="{{ route('products.index') }}">shop now</a>
                                     </div>
                                 </div>
                             </div>
@@ -145,7 +145,7 @@
                                         <h3>new arrivals</h3>
                                         <h1>kid's fashion</h1>
                                         <h6>start at $49.00</h6>
-                                        <a class="common_btn" href="#">shop now</a>
+                                        <a class="common_btn" href="{{ route('products.index') }}">shop now</a>
                                     </div>
                                 </div>
                             </div>
@@ -155,7 +155,7 @@
                                         <h3>new arrivals</h3>
                                         <h1>winter collection</h1>
                                         <h6>start at $99</h6>
-                                        <a class="common_btn" href="#">shop now</a>
+                                        <a class="common_btn" href="{{ route('products.index') }}">shop now</a>
                                     </div>
                                 </div>
                             </div>
@@ -179,9 +179,9 @@
                 <div class="col-xl-12">
                     <div class="offer_time" style="background: url({{ asset('front/images/flash_sell_bg.jpg') }})">
                         <div class="wsus__flash_coundown">
-                            <span class=" end_text">flash sell</span>
-                            <div class="simply-countdown simply-countdown-one"></div>
-                            <a class="common_btn" href="#">see more <i class="fas fa-caret-right"></i></a>
+                            <span class=" end_text">Featurd Product</span>
+
+                            <a class="common_btn" href="{{ route('products.index') . '?featured=1'  }}">see more <i class="fas fa-caret-right"></i></a>
                         </div>
                     </div>
                 </div>
@@ -189,7 +189,9 @@
             <div class="row flash_sell_slider">
 
                 @foreach ($products as $product)
+                <div class="col-xl-3 col-sm-6 col-lg-4">
                     <x-front.main-product-card :product="$product"/>
+                </div>
                 @endforeach
 
 
@@ -595,41 +597,15 @@
         <div class="container">
             <div class="brand_border">
                 <div class="row brand_slider">
-                    <div class="col-xl-2">
-                        <div class="wsus__brand_logo">
-                            <img src="{{ asset('front/images/brand_logo_1.jpg') }}" alt="brand" class="img-fluid w-100">
+                    @foreach ( $brands as $brand)
+                        <div class="col-xl-2">
+                            <div class="wsus__brand_logo">
+                                <a href="{{ route('products.index') . '?brand_id=' . $brand->id}}">
+                                    <img src="{{ $brand->image_url}}" alt="brand" class="img-fluid w-100">
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-xl-2">
-                        <div class="wsus__brand_logo">
-                            <img src="{{ asset('front/images/brand_logo_2.jpg') }}" alt="brand" class="img-fluid w-100">
-                        </div>
-                    </div>
-                    <div class="col-xl-2">
-                        <div class="wsus__brand_logo">
-                            <img src="{{ asset('front/images/brand_logo_3.jpg') }}" alt="brand" class="img-fluid w-100">
-                        </div>
-                    </div>
-                    <div class="col-xl-2">
-                        <div class="wsus__brand_logo">
-                            <img src="{{ asset('front/images/brand_logo_4.jpg') }}" alt="brand" class="img-fluid w-100">
-                        </div>
-                    </div>
-                    <div class="col-xl-2">
-                        <div class="wsus__brand_logo">
-                            <img src="{{ asset('front/images/brand_logo_5.jpg') }}" alt="brand" class="img-fluid w-100">
-                        </div>
-                    </div>
-                    <div class="col-xl-2">
-                        <div class="wsus__brand_logo">
-                            <img src="{{ asset('front/images/brand_logo_6.jpg') }}" alt="brand" class="img-fluid w-100">
-                        </div>
-                    </div>
-                    <div class="col-xl-2">
-                        <div class="wsus__brand_logo">
-                            <img src="{{ asset('front/images/brand_logo_3.jpg') }}" alt="brand" class="img-fluid w-100">
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -639,42 +615,7 @@
     ==============================-->
 
 
-    <!--============================
-        SINGLE BANNER START
-    ==============================-->
-    <section id="wsus__single_banner" class="wsus__single_banner_2">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-6 col-lg-6">
-                    <div class="wsus__single_banner_content">
-                        <div class="wsus__single_banner_img">
-                            <img src="{{ asset('front/images/single_banner_7.jpg') }}" alt="banner" class="img-fluid w-100">
-                        </div>
-                        <div class="wsus__single_banner_text">
-                            <h6>sell on <span>35% off</span></h6>
-                            <h3>smart watch</h3>
-                            <a class="shop_btn" href="#">shop now</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-6 col-lg-6">
-                    <div class="wsus__single_banner_content single_banner_2">
-                        <div class="wsus__single_banner_img">
-                            <img src="{{ asset('front/images/single_banner_8.jpg') }}" alt="banner" class="img-fluid w-100">
-                        </div>
-                        <div class="wsus__single_banner_text">
-                            <h6>New Collection</h6>
-                            <h3>bicycle</h3>
-                            <a class="shop_btn" href="#">shop now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--============================
-        SINGLE BANNER END
-    ==============================-->
+
 
 
     <!--============================
